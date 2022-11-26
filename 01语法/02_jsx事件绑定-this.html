@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>title</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script src="../lib/react.js"></script>
+    <script src="../lib/react-dom.js"></script>
+    <script src="../lib/babel.js"></script>
+    <script type="text/babel">
+      const obj = {
+        foo: function () {
+          console.log("foo", this);
+        },
+      };
+      obj.foo(); // this是obj
+      const config = {
+        // 传入没绑定
+        onclick: obj.foo,
+        // 传入的时候绑定了
+        // onclick: obj.foo.bind(obj),
+      };
+      
+      const click = config.onclick
+      // 因为babel是严格模式，所以this是undefined
+      // 如果不是严格模式，那这个时候打出来的就是window
+      click()
+      // this 的四种绑定规则
+      // 跟它本身在哪没关系，跟它怎么调用有关系
+      // 默认绑定 1.隐式绑定 2.显式绑定 3. new 绑定
+
+      class App extends React.Component {
+        constructor() {
+          super();
+          this.state = {
+            message: "hello world",
+           count: 100,
+          };
+          
+          this.btnClick = this.btnClick.bind(this)
+        }
+        render() {
+          let { message } = this.state;
+          return (
+            <div>
+              <h2>{message}</h2>
+              {/*这个时候就是把函数传过去了，所以点击调用的时候this就是undefined*/ }
+              { /* 绑定方式1: bind*/}
+              <button onClick={this.btnClick}>按钮</button>
+              {/* 绑定方式2: 箭头函数 */}
+              <br/>
+              <button onClick={this.btn2Click}>按钮2</button>
+              
+              {/* 绑定方式3:  */}
+              {/* 每次点击执行的是箭头函数，所以后边的函数必须执行 */}
+              <button onClick={() => this.btn3Click()}>按钮3</button>
+              <h3>{this.state.count}</h3>
+            </div>
+          );
+        }
+        // 按钮1
+        btnClick() {
+          console.log("object");
+          this.setState({message: 'hello react'})
+
+        }
+
+        //按钮2
+        btn2Click = () => {
+          this.setState({message: 'hello vue'})
+        }
+
+        // 按钮3
+        btn3Click() {
+          console.log('btn3')
+          this.setState({message: 'i am the best'})
+        }
+      }
+      ReactDOM.render(<App />, document.getElementById("app"));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>title</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="../lib/react.js"></script>
+    <script src="../lib/react-dom.js"></script>
+    <script src="../lib/babel.js"></script>
+    <script type="text/babel">
+      // bind绑定this的时候顺序不对的问题，干脆开发不用bind传
+      // function foo(name, age, height) {
+      //     console.log(name, age, height)
+      // }
+
+      // const bar = foo.bind('aaa', 'kobe', 30)
+
+      // bar('event')
+
+      class App extends React.Component {
+        constructor() {
+          super();
+          this.state = {
+            message: "hello world",
+            show: true,
+          };
+        }
+        render() {
+          let { message } = this.state;
+          return (
+            <div>
+              {/* 1. event 参数传递 */}
+              <button onClick={this.btnClick.bind(this)}>按钮</button>
+              <button onClick={(e) => this.btnClick(e)}>按钮2</button>
+
+              {/* 2. 额外 参数传递 */}
+              <br />
+              {/* 不推荐 */}
+              <button onClick={this.btnClick.bind(this, "kobe", 30)}>
+                按钮3
+              </button>
+
+              {/* 开发使用 */}
+              <button onClick={(e) => this.btnClick(e, 'why', 18)}>按钮4</button>
+            </div>
+          );
+        }
+        btnClick(e, name, age) {
+          console.log("btnclick", e, this);
+          console.log(name, age);
+        }
+      }
+      ReactDOM.render(<App />, document.getElementById("app"));
+    </script>
+  </body>
+</html>

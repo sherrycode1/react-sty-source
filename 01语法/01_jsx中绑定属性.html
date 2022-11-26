@@ -1,0 +1,59 @@
+<!--
+ * @Author: shenxinli 2509127733@qq.com
+ * @Date: 2022-11-20 05:05:58
+ * @LastEditors: shenxinli 2509127733@qq.com
+ * @LastEditTime: 2022-11-26 02:33:28
+ * @FilePath: /React/01语法/01_jsx中绑定属性.html
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>title</title>
+  </head>
+  <body>
+    <div id="app"></div>
+  
+    <script src="../lib/react.js"></script>
+    <script src="../lib/react-dom.js"></script>
+    <script src="../lib/babel.js"></script>
+    <script type="text/babel">
+      class App extends React.Component {
+        constructor() {
+          super();
+          this.state = {
+            message: "hello world",
+            isActive: true,
+            className: "good",
+            objStyle: { color: "red", fontSize: "100px" },
+          };
+        }
+        render() {
+          let { message, isActive } = this.state;
+          {
+            /* 1.字符串拼接 */
+          }
+          const className = `abc cba ${isActive ? "66" : ""}`;
+
+          const classList = ["a", "b", "c"];
+          if (isActive) {
+            classList.push("active");
+          }
+          return (
+            <div>
+              <h1 className={className}>aaa</h1>
+              {/* 2. 数组管理*/}
+              <h1 className={classList.join(" ")}>本宝宝</h1>
+              {/* 3.绑定style属性 */}
+              <h2 style={this.state.objStyle}>呵呵呵呵呵呵呵呵</h2>
+            </div>
+          );
+        }
+      }
+      ReactDOM.render(<App />, document.getElementById("app"));
+    </script>
+  </body>
+</html>
