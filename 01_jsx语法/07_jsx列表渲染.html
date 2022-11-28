@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>title</title>
+    <style>
+      .item {
+        border: 2px solid #333;
+        margin-bottom: 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script src="../lib/react.js"></script>
+    <script src="../lib/react-dom.js"></script>
+    <script src="../lib/babel.js"></script>
+    <script type="text/babel">
+      class App extends React.Component {
+        constructor() {
+          super();
+          this.state = {
+            students: [
+              { id: 111, name: "kobe", score: 18 },
+              { id: 112, name: "james", score: 298 },
+              { id: 113, name: "kuerry", score: 118 },
+              { id: 114, name: "alice", score: 988 },
+            ],
+          };
+        }
+        render() {
+          let { students } = this.state;
+          //  展示分数大于100的学生
+          const filterStudents = students.filter((item) => item.score > 100);
+        
+        //   && 只展示两个人的信息
+        //  slice(start, end) => [start, end)
+         const filterSlice = filterStudents.slice(0, 2)
+          return (
+            <div>
+              <h2>展示students数据</h2>
+              <ul>
+                {filterSlice.map((item) => {
+                  return (
+                    <div key={item.id} className="item">
+                      <div>学号： {item.id}</div>
+                      <div>姓名： {item.name}</div>
+                      <div>分数： {item.score}</div>
+                    </div>
+                  );
+                })}
+              </ul>
+              <button onClick={this.btnClick}>按钮</button>
+            </div>
+          );
+        }
+        btnClick() {
+          console.log("btnclick");
+        }
+      }
+      ReactDOM.render(<App />, document.getElementById("app"));
+    </script>
+  </body>
+</html>

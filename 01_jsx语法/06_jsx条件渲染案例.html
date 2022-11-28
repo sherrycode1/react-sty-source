@@ -8,7 +8,7 @@
   </head>
   <body>
     <div id="app"></div>
-    
+
     <script src="../lib/react.js"></script>
     <script src="../lib/react-dom.js"></script>
     <script src="../lib/babel.js"></script>
@@ -18,19 +18,31 @@
           super();
           this.state = {
             message: "hello world",
+            isShow: true,
+            isDisplay: true,
           };
         }
         render() {
-          let { message } = this.state;
+          let { message, isShow, isDisplay } = this.state;
           return (
             <div>
-              <h2>{message}</h2>
-              <button onClick={this.btnClick}>按钮</button>
+              {isShow && <h2>{message}</h2>}
+              <button onClick={() => this.btnClick(isShow)}>展示v-if</button>
+              <br />
+              <button onClick={() => this.btnShowClick(isDisplay)}>
+                展示v-show
+              </button>
+              {/*
+              <h1 style={{ display: isDisplay ? "" : "none" }}>hello react</h1>
+               */}
             </div>
           );
         }
-        btnClick() {
-          console.log('btnclick');
+        btnClick(isShow) {
+          this.setState({ isShow: !isShow });
+        }
+        btnShowClick(isDisplay) {
+          this.setState({ isDisplay: !isDisplay });
         }
       }
       ReactDOM.render(<App />, document.getElementById("app"));
