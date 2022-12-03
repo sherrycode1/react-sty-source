@@ -1,0 +1,16 @@
+.title{
+    background-color: pink;
+    display: flex;
+    justify-content: space-around;
+    color: #fff;
+    line-height: 50px;
+    align-items: center;
+}
+.title div{
+    flex: 1;
+    text-align: center;
+}
+
+.active{
+    background-color: rgb(106, 23, 23);
+}
